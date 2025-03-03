@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -16,6 +17,15 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::post('pngos', [DashboardController::class, 'pngoAdd'])->name('pngos.add');  // Add District
     Route::put('pngos/{pngo}', [DashboardController::class, 'pngoUpdate'])->name('pngos.update');  // Update District
     Route::delete('pngos/{pngo}', [DashboardController::class, 'pngoDelete'])->name('pngos.delete');  // Delete District
+
+    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index'); // List all users
+Route::get('/admin/users/create', [UserController::class, 'create'])->name('users.create'); // Show form to create a new user
+Route::post('/admin/users', [UserController::class, 'store'])->name('users.store'); // Store a new user
+Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); // Show form to edit a user
+Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update'); // Update a user
+Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); // Delete a user
+    
+
 
 });
 

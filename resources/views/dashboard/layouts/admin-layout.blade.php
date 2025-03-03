@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title')</title>
 
     <!-- Bootstrap 5 CSS -->
@@ -23,19 +25,52 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="logo">Admin</div>
+        
         <ul>
-            <li><a href="{{ route('dashboard.index') }}"><i class="fas fa-cogs"></i> Dashboard</a></a></li>
+            <li><a href="{{ route('dashboard.index') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        
             <li class="has-submenu">
-                <i class="fas fa-users"></i> General Settings 
+                <i class="fas fa-cogs"></i> General Settings
                 <ul class="submenu">
                     <li><a href="{{ route('dashboard.districts') }}"><i class="fas fa-map-marker-alt"></i> District Management</a></li>
                     <li><a href="{{ route('dashboard.pngos') }}"><i class="fas fa-handshake"></i> PNGOs Management</a></li>
                     <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
                 </ul>
             </li>
-
-            <li>Logout</li>
+        
+            <li class="has-submenu">
+                <i class="fas fa-user-shield"></i> Roles & Permissions
+                <ul class="submenu">
+                    <li><a href="#"><i class="fas fa-user-tag"></i> Manage Roles</a></li>
+                    <li><a href="#"><i class="fas fa-key"></i> Manage Permissions</a></li>
+                    <li><a href="#"><i class="fas fa-users-cog"></i> Assign Roles & Permissions</a></li>
+                </ul>
+            </li>
+        
+            <li class="has-submenu">
+                <i class="fas fa-file-alt"></i> Reports & Analytics
+                <ul class="submenu">
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> User Activity Report</a></li>
+                    <li><a href="#"><i class="fas fa-user-clock"></i> Login History</a></li>
+                    <li><a href="#"><i class="fas fa-lock"></i> Access Logs</a></li>
+                </ul>
+            </li>
+        
+            <li><a href="#"><i class="fas fa-database"></i> Data Entry Management</a></li>
+        
+            <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+        
+            <li class="has-submenu">
+                <i class="fas fa-wrench"></i> System Settings
+                <ul class="submenu">
+                    <li><a href="#"><i class="fas fa-cog"></i> Application Settings</a></li>
+                    <li><a href="#"><i class="fas fa-user-lock"></i> Security Settings</a></li>
+                </ul>
+            </li>
+        
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
+        
     </div>
 
     <!-- Header -->
@@ -53,7 +88,9 @@
 
     </div>
     <!-- Bootstrap JS & jQuery (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap Bundle -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap Bundle --> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
     <script src="{{ asset('dashboard/js/custom.js') }}"></script> <!-- Your custom JS file -->
