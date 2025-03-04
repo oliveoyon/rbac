@@ -18,12 +18,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::put('pngos/{pngo}', [DashboardController::class, 'pngoUpdate'])->name('pngos.update');  // Update District
     Route::delete('pngos/{pngo}', [DashboardController::class, 'pngoDelete'])->name('pngos.delete');  // Delete District
 
-    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index'); // List all users
-Route::get('/admin/users/create', [UserController::class, 'create'])->name('users.create'); // Show form to create a new user
-Route::post('/admin/users', [UserController::class, 'store'])->name('users.store'); // Store a new user
-Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); // Show form to edit a user
-Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update'); // Update a user
-Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); // Delete a user
+    Route::get('/users', [UserController::class, 'index'])->name('users.index'); // List all users
+    Route::post('addUser', [UserController::class, 'addUser'])->name('addUser');
+    Route::post('getUserDetails', [UserController::class, 'getUserDetails'])->name('getUserDetails');
+    Route::post('updateUserDetails', [UserController::class, 'updateUserDetails'])->name('updateUserDetails');
+        // Route::post('deleteClass', [AcademicController::class, 'deleteClass'])->name('deleteClass');
     
 
 

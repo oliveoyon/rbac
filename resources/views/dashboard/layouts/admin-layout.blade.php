@@ -85,6 +85,9 @@
     <div class="content" id="content">
 
         @yield('content')
+        <div id="loader-overlay">
+            <div id="loader"></div>
+        </div>
 
     </div>
     <!-- Bootstrap JS & jQuery (optional) -->

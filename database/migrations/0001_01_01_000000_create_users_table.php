@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('district_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('pngo_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->integer('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
