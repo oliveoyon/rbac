@@ -34,7 +34,7 @@
                 <ul class="submenu">
                     <li><a href="{{ route('dashboard.districts') }}"><i class="fas fa-map-marker-alt"></i> District Management</a></li>
                     <li><a href="{{ route('dashboard.pngos') }}"><i class="fas fa-handshake"></i> PNGOs Management</a></li>
-                    <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
+                    <li><a href="{{ route('users.index') }}"><i class="fas fa-user"></i> Users</a></li>
                 </ul>
             </li>
         

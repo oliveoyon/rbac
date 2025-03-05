@@ -18,7 +18,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::put('pngos/{pngo}', [DashboardController::class, 'pngoUpdate'])->name('pngos.update');  // Update District
     Route::delete('pngos/{pngo}', [DashboardController::class, 'pngoDelete'])->name('pngos.delete');  // Delete District
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index'); // List all users
+    Route::get('/user-management', [UserController::class, 'index'])->name('users.index'); // List all users
     Route::post('addUser', [UserController::class, 'addUser'])->name('addUser');
     Route::post('getUserDetails', [UserController::class, 'getUserDetails'])->name('getUserDetails');
     Route::post('updateUserDetails', [UserController::class, 'updateUserDetails'])->name('updateUserDetails');

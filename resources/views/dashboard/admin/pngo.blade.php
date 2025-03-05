@@ -57,7 +57,7 @@
                                 <input type="text" class="form-control" id="pngoName" name="name">
                             </div>
                             <div class="mb-3 text-end">
-                                <button type="submit" class="btn btn-success btn-sm" id="submitBtn">Save</button>
+                                <button type="submit" class="btn btn-success btn-primary" id="submitBtn">Save</button>
                             </div>
                         </form>
                     </div>
