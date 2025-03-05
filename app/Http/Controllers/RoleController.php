@@ -2,84 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role; // Import Spatie Role Model
 
 class RoleController extends Controller
 {
-    // Display a listing of the roles
-    public function index()
+    public function roles()
     {
         $roles = Role::all();
-        return view('dashboard.admin.roles', compact('roles'));
+        return view('dashboard.admin.role', compact('roles'));
     }
 
-    // Add a new role
-    public function addRole(Request $request)
+    // Function to Add a New Role
+    public function roleAdd(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name',
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name',
         ]);
 
-        // Check if validation fails
-        if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-        }
+        // Create a new role using Spatie
+        $role = Role::create(['name' => $request->name]);
 
-        // Create a new role instance
-        $role = new Role();
-        $role->name = $request->name;
-
-        // Attempt to save the role and check success
-        if ($role->save()) {
-            return response()->json(['code' => 1, 'msg' => 'Role Added Successfully', 'redirect' => route('roles.index')]); 
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Role added successfully!',
+            'role' => $role,
+        ]);
     }
 
-    // Get details of a specific role
-    public function getRoleDetails(Request $request)
+    // Function to Update an Existing Role
+    public function roleUpdate(Request $request, $roleId)
     {
-        $role_id = $request->role_id;
-        $roleDetails = Role::find($role_id);
-        return response()->json(['details' => $roleDetails]);
-    }
-
-    // Update role details
-    public function updateRoleDetails(Request $request)
-    {
-        $role_id = $request->role_id;
-        $role = Role::find($role_id);
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:roles,name,' . $role_id,
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $roleId,
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-        }
-
+        $role = Role::findOrFail($roleId);
         $role->name = $request->name;
+        $role->save();
 
-        if ($role->save()) {
-            return response()->json(['code' => 1, 'msg' => 'Role Updated Successfully', 'redirect' => route('roles.index')]);
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Role updated successfully!',
+            'role' => $role,
+        ]);
     }
 
-    // Delete a role
-    public function deleteRole(Request $request)
+    // Function to Delete a Role
+    public function roleDelete($roleId)
     {
-        $role_id = $request->role_id;
-        $role = Role::find($role_id);
+        $role = Role::findOrFail($roleId);
+        $role->delete();
 
-        if ($role->delete()) {
-            return response()->json(['code' => 1, 'msg' => 'Role Deleted Successfully', 'redirect' => route('roles.index')]);
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Role deleted successfully!',
+        ]);
     }
 }

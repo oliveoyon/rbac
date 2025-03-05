@@ -25,11 +25,10 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::post('updateUserDetails', [UserController::class, 'updateUserDetails'])->name('updateUserDetails');
         // Route::post('deleteClass', [AcademicController::class, 'deleteClass'])->name('deleteClass');
 
-        Route::get('/', [RoleController::class, 'index'])->name('roles.index');
-        Route::post('/add', [RoleController::class, 'addRole'])->name('roles.add');
-        Route::get('/get-details', [RoleController::class, 'getRoleDetails'])->name('roles.getDetails');
-        Route::put('/update', [RoleController::class, 'updateRoleDetails'])->name('roles.update');
-        Route::delete('/delete', [RoleController::class, 'deleteRole'])->name('roles.delete');
+        Route::get('role-management', [RoleController::class, 'roles'])->name('dashboard.roles');
+        Route::post('roles', [RoleController::class, 'roleAdd'])->name('roles.add');  // Add District
+        Route::put('roles/{role}', [RoleController::class, 'roleUpdate'])->name('roles.update');  // Update District
+        Route::delete('roles/{role}', [RoleController::class, 'roleDelete'])->name('roles.delete');  // Delete District
 
 });
 

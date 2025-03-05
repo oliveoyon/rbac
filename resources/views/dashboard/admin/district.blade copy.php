@@ -57,7 +57,7 @@
                                 <label for="districtName" class="form-label">District Name</label>
                                 <input type="text" class="form-control" id="districtName" name="name" required>
                             </div>
-                            <div class="mb-3 text-end">
+                            <div class="mb-3 text-end custombtn">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>

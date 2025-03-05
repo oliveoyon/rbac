@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.admin-layout')
 
-@section('title', 'Pngo Management')
+@section('title', 'Role Management')
 
 
 
@@ -9,13 +9,12 @@
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn btn-success btn-sm" id="createPngoBtn"><i class="fas fa-plus-square mr-1"></i> Add New
-                        PNGO</button>
+                    <button class="btn btn-success btn-sm" id="createRoleBtn"><i class="fas fa-plus-square mr-1"></i> Create Role</button>
                 </div>
             </div>
 
-            <!-- Pngos Table -->
-            <table class="table table-striped" id="pngosTable">
+            <!-- Roles Table -->
+            <table class="table table-striped" id="rolesTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -24,16 +23,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- This is where you will loop through your pngos -->
-                    @foreach ($pngos as $pngo)
-                        <tr id="pngo-{{ $pngo->id }}">
+                    <!-- This is where you will loop through your roles -->
+                    @foreach ($roles as $role)
+                        <tr id="role-{{ $role->id }}">
                             <td>{{ $loop->iteration }} </td>
-                            <td>{{ $pngo->name }}</td>
+                            <td>{{ $role->name }}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm editPngoBtn" data-id="{{ $pngo->id }}"
-                                    data-name="{{ $pngo->name }}">Edit</button>
-                                <button class="btn btn-danger btn-sm deletePngoBtn"
-                                    data-id="{{ $pngo->id }}">Delete</button>
+                                <button class="btn btn-warning btn-sm editRoleBtn" data-id="{{ $role->id }}"
+                                    data-name="{{ $role->name }}">Edit</button>
+                                <button class="btn btn-danger btn-sm deleteRoleBtn"
+                                    data-id="{{ $role->id }}">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -41,20 +40,20 @@
             </table>
         </div>
 
-        <!-- Fullscreen Modal for Create/Edit Pngo -->
-        <div class="modal fade" id="pngoModal" tabindex="-1" aria-labelledby="pngoModalLabel" aria-hidden="true">
+        <!-- Fullscreen Modal for Create/Edit Role -->
+        <div class="modal fade" id="roleModal" tabindex="-1" aria-labelledby="roleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="pngoModalLabel">Add New Pngo</h5>
+                        <h5 class="modal-title" id="roleModalLabel">Add New Role</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="pngoForm" method="POST">
+                        <form id="roleForm" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="pngoName" class="form-label">Pngo Name</label>
-                                <input type="text" class="form-control" id="pngoName" name="name">
+                                <label for="roleName" class="form-label">Role Name</label>
+                                <input type="text" class="form-control" id="roleName" name="name">
                             </div>
                             <div class="mb-3 text-end custombtn">
                                 <button type="submit" class="btn btn-success btn-primary" id="submitBtn">Save</button>
@@ -69,43 +68,43 @@
 
 @push('scripts')
     <script>
-        document.getElementById('createPngoBtn').addEventListener('click', function() {
-            document.getElementById('pngoForm').reset();
-            document.getElementById('pngoForm').setAttribute('action', '{{ route('pngos.add') }}');
-            document.getElementById('pngoForm').setAttribute('method', 'POST');
-            document.getElementById('pngoModalLabel').textContent = 'Add New Pngo';
-            var pngoModal = new bootstrap.Modal(document.getElementById('pngoModal'));
-            pngoModal.show();
+        document.getElementById('createRoleBtn').addEventListener('click', function() {
+            document.getElementById('roleForm').reset();
+            document.getElementById('roleForm').setAttribute('action', '{{ route('roles.add') }}');
+            document.getElementById('roleForm').setAttribute('method', 'POST');
+            document.getElementById('roleModalLabel').textContent = 'Add New Role';
+            var roleModal = new bootstrap.Modal(document.getElementById('roleModal'));
+            roleModal.show();
         });
 
-        document.querySelectorAll('.editPngoBtn').forEach(function(button) {
+        document.querySelectorAll('.editRoleBtn').forEach(function(button) {
             button.addEventListener('click', function() {
-                var pngoId = this.getAttribute('data-id');
-                var pngoName = this.getAttribute('data-name');
+                var roleId = this.getAttribute('data-id');
+                var roleName = this.getAttribute('data-name');
 
-                document.getElementById('pngoName').value = pngoName;
-                document.getElementById('pngoModalLabel').textContent = 'Edit Pngo';
-                document.getElementById('pngoForm').setAttribute('action', '/dashboard/pngos/' + pngoId);
-                document.getElementById('pngoForm').setAttribute('method', 'POST');
+                document.getElementById('roleName').value = roleName;
+                document.getElementById('roleModalLabel').textContent = 'Edit Role';
+                document.getElementById('roleForm').setAttribute('action', '/dashboard/roles/' + roleId);
+                document.getElementById('roleForm').setAttribute('method', 'POST');
 
                 var input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = '_method';
                 input.value = 'PUT';
-                document.getElementById('pngoForm').appendChild(input);
+                document.getElementById('roleForm').appendChild(input);
 
-                var pngoModal = new bootstrap.Modal(document.getElementById('pngoModal'));
-                pngoModal.show();
+                var roleModal = new bootstrap.Modal(document.getElementById('roleModal'));
+                roleModal.show();
             });
         });
 
-        document.querySelectorAll('.deletePngoBtn').forEach(function(button) {
+        document.querySelectorAll('.deleteRoleBtn').forEach(function(button) {
             button.addEventListener('click', function() {
-                var pngoId = this.getAttribute('data-id');
+                var roleId = this.getAttribute('data-id');
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: 'You will not be able to recover this pngo!',
+                    text: 'You will not be able to recover this role!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -113,7 +112,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/dashboard/pngos/${pngoId}`, {
+                        fetch(`/dashboard/roles/${roleId}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -122,11 +121,11 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    document.getElementById('pngo-' + pngoId).remove();
+                                    document.getElementById('role-' + roleId).remove();
 
                                     Swal.fire({
                                         title: 'Deleted!',
-                                        text: 'The pngo has been deleted.',
+                                        text: 'The role has been deleted.',
                                         icon: 'success',
                                         position: 'top-end',
                                         toast: true,
@@ -135,7 +134,7 @@
                                         timerProgressBar: true,
                                     });
                                 } else {
-                                    Swal.fire('Error!', 'There was an error deleting the pngo.',
+                                    Swal.fire('Error!', 'There was an error deleting the role.',
                                         'error');
                                 }
                             });
@@ -144,7 +143,7 @@
             });
         });
 
-        document.getElementById('pngoForm').addEventListener('submit', function(event) {
+        document.getElementById('roleForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
             var submitButton = document.querySelector('#submitBtn');
@@ -153,8 +152,8 @@
             var action = this.getAttribute('action');
             var method = this.getAttribute('method');
             var formData = new FormData(this);
-            var pngoModalElement = document.getElementById('pngoModal');
-            var pngoModal = bootstrap.Modal.getInstance(pngoModalElement);
+            var roleModalElement = document.getElementById('roleModal');
+            var roleModal = bootstrap.Modal.getInstance(roleModalElement);
 
             fetch(action, {
                     method: method,
@@ -166,15 +165,15 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        if (pngoModal) {
-                            pngoModal.hide(); // Hide modal first
+                        if (roleModal) {
+                            roleModal.hide(); // Hide modal first
                         }
 
                         // Show Swal message for at least 2 seconds
                         let swalInstance = Swal.fire({
                             title: 'Success!',
-                            text: method === 'POST' ? 'Pngo added successfully.' :
-                                'Pngo updated successfully.',
+                            text: method === 'POST' ? 'Role added successfully.' :
+                                'Role updated successfully.',
                             icon: 'success',
                             position: 'top-end',
                             toast: true,
@@ -188,10 +187,10 @@
                             if (method === 'POST') {
                                 location.reload(); // Reload page after Swal message finishes
                             } else {
-                                let pngoRow = document.getElementById('pngo-' + data.id);
-                                if (pngoRow) {
-                                    pngoRow.querySelector('.pngo-name').textContent = formData.get(
-                                        'pngo_name');
+                                let roleRow = document.getElementById('role-' + data.id);
+                                if (roleRow) {
+                                    roleRow.querySelector('.role-name').textContent = formData.get(
+                                        'role_name');
                                 }
                             }
                         }, 500); // Delay UI update slightly for smoothness

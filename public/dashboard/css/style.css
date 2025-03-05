@@ -445,6 +445,34 @@ body {
     background-color: #545b62;
 }
 
+.custombtn .btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+/* Primary Button */
+.custombtn .btn-primary {
+    background-color: #c30f08;
+    border: none;
+}
+
+.custombtn .btn-primary:hover {
+    background-color: #9d0c06;
+}
+
+/* Cancel Button */
+.custombtn .btn-secondary {
+    background-color: #6c757d;
+    /* Gray */
+    border: none;
+}
+
+.custombtn .btn-secondary:hover {
+    background-color: #545b62;
+}
+
 /* Responsive Modal */
 @media (max-width: 576px) {
     .modal-dialog {
